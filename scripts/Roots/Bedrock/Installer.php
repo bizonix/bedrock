@@ -38,7 +38,7 @@ class Installer {
     $env_file = "{$root}/.env";
 
     if (copy("{$root}/.env.example", $env_file)) {
-      file_put_contents($env_file, implode($salts, "\n"), FILE_APPEND | LOCK_EX);
+      file_put_contents($env_file, "\n".implode($salts, "\n"), FILE_APPEND | LOCK_EX);
     } else {
       $io->write("<error>An error occured while copying your .env file</error>");
       return 1;
@@ -56,7 +56,7 @@ class Installer {
 
     $salt = '';
     for ($i = 0; $i < $length; $i++) {
-      $salt .= substr($chars, rand(0, strlen($chars) - 1), 1);
+      $salt .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
     }
 
     return $salt;
